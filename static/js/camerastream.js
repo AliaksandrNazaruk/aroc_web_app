@@ -22,8 +22,7 @@ const depthHistory = {
 
 async function requestDepth(x, y) {
     return new Promise((resolve, reject) => {
-      // Здесь используйте URL вашего эндпоинта на сервере камеры (например, ws://192.168.1.55:10000)
-      const ws = new WebSocket('ws://' + location.hostname + ':8000/depth_query');
+      const ws = new WebSocket(`ws://${config.host}:${config.robotServerPort}/depth_query`);
       ws.onopen = () => {
         ws.send(JSON.stringify({ x: x, y: y }));
       };
@@ -50,7 +49,7 @@ async function requestDepth(x, y) {
 
 // Функция для установки соединения для depth потока
 function connectDepthSocket() {
-    const depthSocket = new WebSocket('ws://192.168.1.55' + ':9999');
+    const depthSocket = new WebSocket(`ws://${config.host}:9999`);
     depthSocket.binaryType = 'arraybuffer';
     
     depthSocket.onopen = () => {
@@ -110,7 +109,7 @@ function connectDepthSocket() {
 
 // Функция для установки соединения для цветного потока
 function connectColorSocket() {
-    const colorSocket = new WebSocket('ws://' + location.hostname + ':8000/color');
+    const colorSocket = new WebSocket(`ws://${config.host}:${config.robotServerPort}/color`);
     
     colorSocket.onopen = () => {
         console.log('Color WebSocket connection established.');

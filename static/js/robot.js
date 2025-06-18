@@ -1,5 +1,5 @@
 class RobotServerApi {
-  constructor(baseURL = 'http://' + location.hostname + ':8000') {
+  constructor(baseURL = config.robotServerBase) {
     this.baseURL = baseURL;
   }
 
