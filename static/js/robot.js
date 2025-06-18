@@ -1,3 +1,4 @@
+
 class RobotServerApi {
   constructor(baseURL = config.robotServerBase) {
     this.baseURL = baseURL;
@@ -26,6 +27,7 @@ class RobotServerApi {
 }
 
 const robotServerApi = new RobotServerApi();
+
 
 window.robotServer = {
   xarm_command: (cmd) => robotServerApi.xarmCommand(cmd),

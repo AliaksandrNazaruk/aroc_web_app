@@ -7,7 +7,9 @@ class ArduinoApi {
   async sendCommand(command) {
     try {
       const data = await apiClient.postJson(`${this.baseURL}/send`, { command });
+
       return { status: data.status, command: data.command };
+
     } catch (error) {
       console.error('Ошибка при отправке команды:', error);
       return { error: error.message };
