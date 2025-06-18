@@ -8,7 +8,10 @@
         button { margin: 0.5em; }
         #output { margin-top: 1em; background: #f0f0f0; padding: 1em; border-radius: 5px; }
         .error { color: red; }
-    </style>
+</style>
+    <script src="../utils/apiClient.js"></script>
+    <script src="../utils/errorDialog.js"></script>
+    <script src="../igusApi.js"></script>
 </head>
 <body>
     <h1>Тест IgusApi</h1>
@@ -22,49 +25,6 @@
     <div id="output"></div>
 
     <script>
-        // Вставьте сюда класс IgusApi из предыдущего ответа!
-        class IgusApi {
-            constructor(baseUrl = '/api/igus') {
-                this.baseUrl = baseUrl;
-            }
-            async getState() {
-                const response = await fetch(`${this.baseUrl}/state`);
-                if (!response.ok) throw new Error(await response.text());
-                return await response.json();
-            }
-            async getData() {
-                const response = await fetch(`${this.baseUrl}/data`);
-                if (!response.ok) throw new Error(await response.text());
-                return await response.json();
-            }
-            async sendCommand(type, params = {}) {
-                const response = await fetch(`${this.baseUrl}/`+type, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(params) // <-- убираем params как обёртку!
-                });
-                if (!response.ok) throw new Error(await response.text());
-                return await response.json();
-            }
-            async reference() { return this.sendCommand('reference'); }
-            async moveToPosition(position, velocity = 5000, acceleration = 5000) {
-                return this.sendCommand('move_to_position', { position, velocity, acceleration });
-            }
-            async faultReset() { return this.sendCommand('fault_reset'); }
-            async shutdown() { return this.sendCommand('shutdown'); }
-            async switchOn() { return this.sendCommand('switch_on'); }
-            async enableOperation() { return this.sendCommand('enable_operation'); }
-            async runScript(scriptData) {
-                const response = await fetch(`${this.baseUrl}/run_script`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(scriptData)
-                });
-                if (!response.ok) throw new Error(await response.text());
-                return await response.json();
-            }
-        }
-
         const igus = new IgusApi();
         const output = document.getElementById('output');
 
@@ -73,6 +33,7 @@
         }
         function showError(error) {
             output.innerHTML = `<div class="error">Ошибка: ${error.message}</div>`;
+            errorDialog.showError(error.message);
         }
 
         function getState() {
