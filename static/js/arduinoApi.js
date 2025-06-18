@@ -65,22 +65,8 @@ class ArduinoApi {
 
   // Метод для отправки команды на сервер
   async sendCommand(command) {
-    const url = `${this.baseURL}/send`;
-    const body = JSON.stringify({ command });
-
     try {
-      const response = await fetch(url, {
-        method: 'POST',
-        body: body,
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || 'Unknown error');
-      }
-
-      // Если команда успешно отправлена
+      const data = await apiClient.postJson(`${this.baseURL}/send`, { command });
       return {
         status: data.status,
         command: data.command,

@@ -5,29 +5,17 @@ class IgusApi {
 
     // Получить состояние мотора
     async getState() {
-        const response = await fetch(`${this.baseUrl}/state`);
-        if (!response.ok) throw new Error(await response.text());
-        const data = await response.json(); // Вот тут твои данные
-        return data;
+        return apiClient.getJson(`${this.baseUrl}/state`);
     }
 
     // Получить данные мотора (сжатый формат)
     async getData() {
-        const response = await fetch(`${this.baseUrl}/data`);
-        if (!response.ok) throw new Error(await response.text());
-        const data = await response.json(); // Вот тут твои данные
-        return data;
+        return apiClient.getJson(`${this.baseUrl}/data`);
     }
 
     // Универсальная отправка команды
     async sendCommand(type, params = {}) {
-        const response = await fetch(`${this.baseUrl}/`+type, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(params) // <-- убираем params как обёртку!
-        });
-        if (!response.ok) throw new Error(await response.text());
-        return await response.json();
+        return apiClient.postJson(`${this.baseUrl}/` + type, params);
     }
 
     // Команда reference (homing)
