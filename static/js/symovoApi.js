@@ -1,4 +1,5 @@
 
+'use strict';
 const apiUrl = `http://${config.host}/api/v0/amr`;
 
 

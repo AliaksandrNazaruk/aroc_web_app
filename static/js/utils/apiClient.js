@@ -1,36 +1,32 @@
 (function(global) {
-    async function postJson(url, payload) {
-        const response = await fetch(url, {
+    'use strict';
+
+    async function fetchJson(url, options = {}) {
+        const response = await fetch(url, options);
+        let data = null;
+        try {
+            data = await response.json();
+        } catch (e) {
+            throw new Error('Invalid JSON response');
+        }
+
+        if (!response.ok) {
+            const message = data && (data.error || data.detail || response.statusText);
+            throw new Error(message || 'Request failed');
+        }
+
+        return data;
+    }
+
+    const postJson = (url, payload) =>
+        fetchJson(url, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)
         });
-        let data = null;
-        try {
-            data = await response.json();
-        } catch (e) {
-            throw new Error('Invalid JSON response');
-        }
-        if (!response.ok) {
-            const message = data && (data.error || data.detail || response.statusText);
-            throw new Error(message || 'Request failed');
-        }
-        return data;
-    }
-    async function getJson(url) {
-        const response = await fetch(url);
-        let data = null;
-        try {
-            data = await response.json();
-        } catch (e) {
-            throw new Error('Invalid JSON response');
-        }
-        if (!response.ok) {
-            const message = data && (data.error || data.detail || response.statusText);
-            throw new Error(message || 'Request failed');
-        }
-        return data;
-    }
-    global.apiClient = { postJson, getJson };
+
+    const getJson = url => fetchJson(url);
+
+    global.apiClient = { postJson, getJson, fetchJson };
 })(this);
 
