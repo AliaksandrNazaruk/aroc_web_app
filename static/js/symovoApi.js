@@ -1,4 +1,6 @@
-const apiUrl = `http://${location.hostname}/api/v0/amr`;
+
+const apiUrl = `http://${config.host}/api/v0/amr`;
+
 
 async function fetchRobotIds() {
   try {
