@@ -1,4 +1,5 @@
-liftControls = {
+'use strict';
+const liftControls = {
   name: "LiftControls",
   props: {
       className: {
@@ -28,8 +29,9 @@ liftControls = {
       }
 
   }
-}
-, liftPanel = {
+};
+
+const liftPanel = {
   name: "LiftPanel",
   components: {
       LiftControls: liftControls
@@ -374,4 +376,4 @@ liftControls = {
       ]);
   }
   
-}   
+};

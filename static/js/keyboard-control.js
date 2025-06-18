@@ -1,3 +1,4 @@
+'use strict';
 function KeyboardControl() {
     this.activeKey = null;
     this.keyMap = this.loadKeyMap();

@@ -1,3 +1,4 @@
+'use strict';
 // API helper for light control
 class ArduinoApi {
   constructor(baseURL = config.robotServerBase) {

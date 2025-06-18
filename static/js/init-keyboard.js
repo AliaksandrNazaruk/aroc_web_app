@@ -1,3 +1,4 @@
+"use strict";
 // Initialize keyboard control
 window.addEventListener('load', function() {
     // Create and initialize keyboard control instance

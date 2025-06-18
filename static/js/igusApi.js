@@ -1,3 +1,4 @@
+'use strict';
 class IgusApi {
     constructor(baseUrl = '/api/igus') {
         this.baseUrl = baseUrl;
@@ -34,14 +35,10 @@ class IgusApi {
     }
 }
 
-// Пример использования:
-window.igus = new IgusApi();
+// Instantiate and expose controller
+window.igusController = new IgusApi();
 
-// Получить состояние
-igus.getData().then(console.log).catch(console.error);
-
-// Отправить reference
-// igus.reference().then(console.log).catch(console.error);
-
-// Переместить мотор
-// igus.moveToPosition(1000, 5000, 5000).then(console.log).catch(console.error);
+// Example usage:
+// window.igusController.getData().then(console.log).catch(console.error);
+// window.igusController.reference().then(console.log).catch(console.error);
+// window.igusController.moveToPosition(1000, 5000, 5000).then(console.log).catch(console.error);

@@ -1,4 +1,5 @@
 (function() {
+  'use strict';
   const settingsBtn = document.getElementById('settings-button');
   const batteryText = document.querySelector('.battery-percentage');
   const batteryFillRect = document.querySelector('.battery-fill');

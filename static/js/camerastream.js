@@ -1,3 +1,4 @@
+'use strict';
 const camera_offset = 6;
 const width = 640;
 const height = 480;
