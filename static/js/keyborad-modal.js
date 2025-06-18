@@ -1,3 +1,4 @@
+'use strict';
 window.KeyboardSettingsModal = {
     template: `
         <div class="keyboard-settings-modal" v-if="visible">

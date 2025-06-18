@@ -1,3 +1,4 @@
+'use strict';
 liftControls = {
   name: "LiftControls",
   props: {

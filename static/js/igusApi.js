@@ -1,3 +1,4 @@
+'use strict';
 class IgusApi {
     constructor(baseUrl = '/api/igus') {
         this.baseUrl = baseUrl;
