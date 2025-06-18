@@ -35,7 +35,9 @@ window.robotServer = {
         };
       } catch (error) {
         console.error('Ошибка при отправке команды:', error);
+
         errorDialog.showError(error.message);
+
         return { error: error.message };
       }
     }
