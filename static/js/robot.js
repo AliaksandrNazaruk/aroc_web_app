@@ -27,96 +27,25 @@ window.robotServer = {
   
     // Метод для отправки команды на сервер
     async sendCommand(data) {
-      const url = `${this.baseURL}/run_script`;
-      const body = JSON.stringify(data);
-  
       try {
-        const response = await fetch(url, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: body,
-        });
-  
-        const data = await response.json();
-
-        if (!response.ok) {
-          let msg = 'Unknown error';
-          let details = null;
-
-          if (typeof data.detail === 'string') {
-            msg = data.detail;
-          } else if (data.detail && typeof data.detail === 'object') {
-            msg = data.detail.message || msg;
-            details = data.detail.states;
-          } else if (data.error) {
-            msg = data.error;
-          }
-//   // В sendCommand и xarmSendCommand
-// console.log('Response:', data);
-// console.log('Details:', data.detail && data.detail.states);
-
-// // Перед showError
-// showError(msg, details);
-          showError(msg, details);
-
-          throw new Error(msg);
-        }
-
-        // Если команда успешно отправлена
+        const result = await apiClient.postJson(`${this.baseURL}/run_script`, data);
         return {
-          status: data.status,
-          result: data.result,
+          status: result.status,
+          result: result.result,
         };
       } catch (error) {
         console.error('Ошибка при отправке команды:', error);
-//   // В sendCommand и xarmSendCommand
-// console.log('Response:', data);
-// console.log('Details:', data.detail && data.detail.states);
-
-// // Перед showError
-// showError(msg, details);
-        // showError(error.message);
-
+        showError(error.message);
         return { error: error.message };
       }
     }
     // Метод для отправки команды на сервер
     async xarmSendCommand(command) {
-      const url = `${this.baseURL}/api/xarm/command`;
-      const body = JSON.stringify({ command });
-  
       try {
-        const response = await fetch(url, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: body,
-        });
-  
-        const data = await response.json();
-
-        if (!response.ok) {
-          let msg = 'Unknown error';
-
-          if (typeof data.detail === 'string') {
-            msg = data.detail;
-          } else if (data.detail && typeof data.detail === 'object') {
-            msg = data.detail.message || msg;
-          }
-
-          throw new Error(msg);
-        }
-  
-        // Если команда успешно отправлена
-        return {
-          status: data.result
-        };
+        const data = await apiClient.postJson(`${this.baseURL}/api/xarm/command`, { command });
+        return { status: data.result };
       } catch (error) {
         console.error('Ошибка при отправке команды:', error);
-        // showError(error.message);
         return { error: error.message };
       }
     }
